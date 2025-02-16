@@ -267,11 +267,34 @@ def setup_scene():
     fill = bpy.context.active_object
     fill.data.energy = 3
     
-    # Add camera
+    # Add and set up camera
     bpy.ops.object.camera_add(location=(4, -4, 3))
     camera = bpy.context.active_object
     camera.rotation_euler = (math.radians(60), 0, math.radians(45))
+    
+    # Set this as the active camera for rendering
     bpy.context.scene.camera = camera
+    
+    # Optional: set camera properties
+    camera.data.lens = 35  # focal length
+    camera.data.clip_start = 0.1
+    camera.data.clip_end = 100
+
+# Then after creating the cat, we'll set up the camera constraint:
+def setup_camera_tracking():
+    camera = bpy.context.scene.camera
+    # Find cat's body (first sphere created)
+    cat_body = None
+    for obj in bpy.data.objects:
+        if obj.type == 'MESH' and obj.name.startswith('Sphere'):
+            cat_body = obj
+            break
+    
+    if cat_body:
+        constraint = camera.constraints.new(type='TRACK_TO')
+        constraint.target = cat_body
+        constraint.track_axis = 'TRACK_NEGATIVE_Z'
+        constraint.up_axis = 'UP_Y'
 
 def animate_cat():
     # Get the tail object
@@ -300,22 +323,22 @@ def animate_cat():
     print(f"Found legs - Right leg: {right_leg}, Left leg: {left_leg}")
     
     # Create typing animation
-    for frame in range(50):
-        # Tail swishing
-        tail.rotation_euler.z = math.sin(frame * 0.2) * 0.3
+    for frame in range(240):  # 10 seconds at 24fps
+        # Tail swishing - adjusted frequency for longer animation
+        tail.rotation_euler.z = math.sin(frame * 0.1) * 0.3  # Slowed down frequency
         tail.keyframe_insert(data_path="rotation_euler", frame=frame)
         
-        # Breathing animation for body
+        # Breathing animation for body - adjusted frequency
         for obj in bpy.data.objects:
             if obj.type == 'MESH' and obj.name.startswith('Sphere'):
-                obj.scale.z = 1 + math.sin(frame * 0.1) * 0.02
+                obj.scale.z = 1 + math.sin(frame * 0.05) * 0.02  # Slowed down frequency
                 obj.keyframe_insert(data_path="scale", frame=frame)
         
-        # Typing animation for paws
+        # Typing animation for paws - adjusted frequency
         if right_paw and left_paw:
             # Right paw types faster than left paw
-            right_offset = math.sin(frame * 0.8) * 0.05  # Faster, smaller movement
-            left_offset = math.sin(frame * 0.6) * 0.07   # Slower, larger movement
+            right_offset = math.sin(frame * 0.4) * 0.05  # Adjusted frequencies
+            left_offset = math.sin(frame * 0.3) * 0.07
             
             # Animate right paw
             right_paw.location.z = 0.45 + right_offset
@@ -334,6 +357,22 @@ def animate_cat():
                 left_leg.scale.z = 1 + left_offset * 0.5
                 left_leg.keyframe_insert(data_path="scale", frame=frame)
 
+def animate_camera():
+    camera = bpy.context.scene.camera
+    
+    # Animate camera movement for full 360-degree rotation
+    for frame in range(240):  # 10 seconds at 24fps
+        # Complete 360-degree rotation
+        angle = math.radians((frame/240) * 360)  # Convert frame progress to angle
+        radius = 5  # Distance from center
+        
+        camera.location.x = math.cos(angle) * radius
+        camera.location.y = math.sin(angle) * radius
+        camera.location.z = 3 + math.sin(frame * 0.1) * 0.2  # Slight up/down movement
+        
+        # Add keyframes
+        camera.keyframe_insert(data_path="location", frame=frame)
+
 # Create the scene
 print("\n=== Starting Scene Creation ===")
 print("Initial objects:", bpy.data.objects.keys())
@@ -348,6 +387,9 @@ print("\nAfter create_laptop, objects:", bpy.data.objects.keys())
 # Now create cat
 create_cat_body()
 print("\nAfter create_cat_body, objects:", bpy.data.objects.keys())
+
+# Set up camera tracking after cat is created
+setup_camera_tracking()
 
 # Add debug prints before and after material application
 print("\n=== Starting Material Application ===")
@@ -379,8 +421,9 @@ for obj in bpy.data.objects:
         print(f"- {obj.name}: location={obj.location}, type={obj.type}")
 
 # Set up animation
-bpy.context.scene.frame_end = 50
+bpy.context.scene.frame_end = 240  # 10 seconds at 24fps
 animate_cat()
+animate_camera()
 
 # Render settings
 bpy.context.scene.render.engine = 'CYCLES'
