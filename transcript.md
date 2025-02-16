@@ -8,12 +8,18 @@
 ## Development Iterations
 Total iterations: 12 major adjustments
 1. Initial cat and laptop creation (5 iterations)
-[try 1](try-1.jpg)
+
+[try 1](experiments/01-coding-cat/try-1.jpg)
+
 2. Laptop visibility fixes (1 iteration)
 3. Laptop positioning relative to cat (3 iterations)
-[try 3](try-3.jpg)
+
+[try 3](experiments/01-coding-cat/try-3.jpg)
+
 4. Cat leg and paw positioning (2 iterations)
-[try-5-or-6](try-5-or-6.jpg)
+
+[try-5-or-6](experiments/01-coding-cat/try-5-or-6.jpg)
+
 5. Smile positioning and rotation attempts (4 iterations)
    - Tried X axis rotation
    - Tried Y axis rotation
