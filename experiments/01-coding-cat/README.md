@@ -7,7 +7,7 @@ This experiment creates a simple animation of a calico cat named Jynx relaxing w
 - Simple animation with keyframes
 - Scene setup with lighting and camera positioning
 
-[![Cat Video](assets/0001.jpg)](assets/cat-vid.mp4)
+[![Cat Video](assets/0001.png)](assets/cat-vid.mp4)
 
 ## Running the Script
 
