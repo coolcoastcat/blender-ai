@@ -9,16 +9,16 @@
 Total iterations: 12 major adjustments
 1. Initial cat and laptop creation (5 iterations)
 
-![try 1](renders/try-1.jpg)
+![try 1](assets/try-1.jpg)
 
 2. Laptop visibility fixes (1 iteration)
 3. Laptop positioning relative to cat (3 iterations)
 
-![try 3](renders/try-3.jpg)
+![try 3](assets/try-3.jpg)
 
 4. Cat leg and paw positioning (2 iterations)
 
-![try-5-or-6](renders/try-5-or-6.jpg)
+![try-5-or-6](assets/try-5-or-6.jpg)
 
 5. Smile positioning and rotation attempts (4 iterations)
    - Tried X axis rotation
@@ -26,7 +26,7 @@ Total iterations: 12 major adjustments
    - Tried Z axis rotation
    - Attempted various tilt adjustments
 
-![Interruped render](renders/cat-stopped.png)
+![Interruped render](assets/cat-stopped.png)
 
 ## Cat Animation Development
 Started developing a script to create an animated calico cat with a laptop. Key development steps:

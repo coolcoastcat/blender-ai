@@ -7,6 +7,8 @@ import mathutils
 bpy.ops.object.select_all(action='SELECT')
 bpy.ops.object.delete()
 
+
+
 def create_cat_body():
     # Create main body - adjusted position for laptop interaction
     bpy.ops.mesh.primitive_uv_sphere_add(radius=1.0, location=(0, 0, 0.8))
@@ -426,6 +428,7 @@ animate_cat()
 animate_camera()
 
 # Render settings
+bpy.context.scene.render.filepath = "./renders/"
 bpy.context.scene.render.engine = 'CYCLES'
 bpy.context.scene.cycles.samples = 128
 bpy.context.scene.render.resolution_x = 1920
